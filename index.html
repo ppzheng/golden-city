@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>失落的黄金城｜大夺金玩法</title>
+<style>
+:root{color-scheme:dark;--bg:#171310;--panel:#231c17;--line:#413327;--ink:#fff2dd;--muted:#c8b49b;--gold:#ffc972;--aqua:#a7e0d3}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,"PingFang SC","Microsoft YaHei",sans-serif}button{font:inherit;color:inherit;cursor:pointer;touch-action:manipulation}button:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+main{max-width:640px;margin:auto;padding:0 18px 32px}header{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:68px}header strong{font-size:14px;letter-spacing:.08em;color:var(--muted)}.quiet{border:1px solid var(--line);border-radius:12px;background:transparent;padding:8px 12px;min-height:44px;font-size:14px}
+.hero{position:relative;isolation:isolate;overflow:hidden;border:1px solid #62442a;border-radius:24px;padding:28px 18px 23px;min-height:232px;background:radial-gradient(ellipse at 82% 24%,#9b5329,#4c2d22 48%,#2d2019 83%);display:flex;flex-direction:column;justify-content:end}.scene{position:absolute;inset:0;z-index:-1;overflow:hidden;pointer-events:none}.sun{position:absolute;right:10%;top:14%;width:99px;aspect-ratio:1;border-radius:100%;background:#f9ad5b;box-shadow:0 0 45px #fc9d5350}.ridge{position:absolute;inset:31% -6% 0;background:#663b29;clip-path:polygon(0 59%,22% 37%,36% 43%,60% 18%,72% 36%,89% 25%,100% 39%,100% 100%,0 100%)}.city{position:absolute;right:4%;top:36%;width:160px;height:111px;background:linear-gradient(120deg,#ffd17b,#a55a2b 76%);clip-path:polygon(0 100%,0 75%,14% 75%,14% 61%,26% 61%,26% 43%,37% 43%,37% 30%,50% 0,63% 30%,63% 43%,75% 43%,75% 61%,86% 61%,86% 75%,100% 75%,100% 100%)}.shade{position:absolute;inset:0;background:linear-gradient(0deg,#2b1c16 0%,transparent 75%),linear-gradient(90deg,#2b1c16aa,transparent 84%)}h1,h2,p{margin:0}h1{font-size:clamp(28px,8vw,44px);line-height:1.18;letter-spacing:.015em}.hero p{margin-top:8px;color:#f6d5a8;font-size:14px}
+section{margin-top:22px}h2{font-size:19px;margin-bottom:10px}.schedule{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.day{text-align:left;padding:9px 8px 10px 11px;min-height:66px;border:1px solid var(--line);border-radius:13px;background:var(--panel)}.day span{display:block;font-size:13px;color:var(--muted)}.day b{font-size:14px;white-space:nowrap}.day.castle b{color:var(--gold)}.day[aria-pressed=true]{border-color:var(--aqua);background:#22302a}.day.castle[aria-pressed=true]{border-color:var(--gold);background:#3c2b1b}
+.card{border:1px solid var(--line);border-radius:17px;padding:15px;background:var(--panel);margin-top:10px}.card h3{margin:0;font-size:17px}.card p{margin-top:5px;color:var(--muted);font-size:14px}.actions{display:grid;grid-template-columns:1fr auto;gap:8px;margin-top:13px}.primary{border:0;border-radius:11px;background:var(--gold);color:#30200e;font-weight:750;min-height:46px;padding:8px 12px}
+dialog{margin:auto auto 0;width:min(100%,520px);max-height:85dvh;overflow:auto;color:var(--ink);background:#241c17;border:1px solid #5c4533;border-radius:22px 22px 0 0;padding:18px 20px calc(20px + env(safe-area-inset-bottom));overscroll-behavior:contain}dialog::backdrop{background:#000a}body:has(dialog[open]){overflow:hidden}.sheet-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}.sheet-head h2{margin:0}.sheet-body p{margin:8px 0;color:var(--muted)}.sheet-body strong{color:var(--ink)}.sheet-body .card{margin:10px 0}.sheet-body ol{margin:6px 0;padding-left:22px}.sheet-body li{margin:7px 0}.sheet-body .primary{width:100%;margin-top:12px}
+@media(min-width:680px){.hero{min-height:264px}.city{width:210px;height:140px}.sun{width:124px}}@media(max-width:345px){main{padding-inline:12px}.actions{grid-template-columns:1fr}}
+.task-controls{display:grid;gap:12px}.task-days,.task-groups{display:grid;gap:6px}.task-days{grid-template-columns:repeat(6,minmax(0,1fr))}.task-groups{grid-template-columns:repeat(3,minmax(0,1fr))}
+.task-option{min-height:44px;padding:6px 2px;border:1px solid var(--line);border-radius:9px;background:var(--bg);font-size:14px}.task-option span{display:block;font-size:12px;color:var(--muted)}.task-option[aria-pressed=true]{border-color:var(--gold);background:#3c2b1b;color:var(--gold)}.task-groups .task-option{min-height:56px}
+#task-result .card{margin-bottom:0}
+.menu{display:grid;grid-template-columns:minmax(0,1fr);gap:9px;margin-top:18px}.menu button{min-height:60px;text-align:left;padding:10px 13px;background:var(--panel);border:1px solid var(--line);border-radius:14px;font-weight:700}.menu button:active{border-color:var(--gold)}.menu small{float:right;color:var(--muted);font-size:13px;font-weight:400}.sheet-body .actions .primary{margin:0}.schedule .day:active{border-color:var(--gold)}
+</style>
+</head>
+<body>
+<main>
+<header><strong>塔塔冒险队 · 大夺金</strong></header>
+<div class="hero">
+<div class="scene" aria-hidden="true"><div class="sun"></div><div class="ridge"></div><div class="city"></div><div class="shade"></div></div>
+<h1>失落的黄金城</h1><p>赢幻境叠击杀加成，打黄金城冲势力榜</p>
+</div>
+<nav class="menu" aria-label="玩法入口">
+<button id="map" aria-haspopup="dialog">夺金地图<small>暂无</small></button>
+<button id="factions">各势力战力分析</button>
+<button id="rules">大夺金规则</button>
+<button id="strategy">小组任务</button>
+<button id="schedule">日程</button>
+</nav>
+</main>
+<dialog aria-labelledby="sheet-title"><div class="sheet-head"><h2 id="sheet-title"></h2><form method="dialog"><button class="quiet" autofocus>关闭</button></form></div><div class="sheet-body" id="sheet-body"></div></dialog>
+<script>
+const days = {
+  1: '首日 8 个小幻境',
+  2: '继续叠击杀加成',
+  3: '第一场黄金城',
+  4: '小幻境重开',
+  5: '最后一天叠击杀加成',
+  6: '最终黄金城'
+};
+const goals = {
+  1: '集中拿下有把握的幻境首名，当天决定留队还是跳槽。',
+  2: '继续叠黄金城击杀加成，开城前确认进场路线和出勤。',
+  3: '争取首场黄金城第一，测出城战对小队击杀榜的实际贡献。',
+  4: '根据首战结果补短板：争幻境加成、稳住进城路线。',
+  5: '争取影响终战名次的最后一批加成，留足终战饮料。',
+  6: '拿下总势力第一，同时冲小队击杀第一。'
+};
+const groups = [
+  { name: '高战组', level: '1500–1800' },
+  { name: '中战组', level: '1000–1400' },
+  { name: '低战组', level: '低于 1000' }
+];
+const tasks = {
+  1: [
+    ['守关键地块，打主攻幻境', '指定高战留守易被抢的关键地块，其余高战集中打有胜算的幻境。', '前几场结束后报各家战力和出勤，首日定留队或跳槽。'],
+    ['打副点，随时补分', '优先打击杀效率高的对手，主攻点进入追分阶段再集中支援。'],
+    ['首日刷击杀', '在能稳定连胜的点刷小队击杀。主攻幻境有好打的目标时，进场一起刷。']
+  ],
+  2: [
+    ['守前线地块，带队打幻境', '进入目标势力后，由高战守住通往黄金城的关键地块，其余人争有胜算的幻境。'],
+    ['支援幻境与进城路线', '按指挥补分，空档核对从前线到城边的主路线。'],
+    ['边刷击杀边补幻境', '刷能稳定取胜的目标，主攻幻境有合适目标时进去补击杀。']
+  ],
+  3: [
+    ['守进城地块，主力打城', '若进场依赖地块，指定高战守关键入口，其余高战满足进场条件后集中打城。'],
+    ['补城战输出', '优先打能稳定取胜的目标，按城战分差决定何时加饮料。'],
+    ['按效率刷小队击杀', '城内有能稳定赢且计入小队榜的目标就打城内，其他时候继续在高效率点刷。']
+  ],
+  4: [
+    ['稳住前线，争幻境第一', '由高战补守首战暴露的关键地块，其余高战优先争有胜算的幻境。'],
+    ['按首战结果补位', '击杀加成落后就集中补幻境击杀，进场慢就协助确认缺口。'],
+    ['按首战结果挑点刷', '优先去第 3 天实测击杀效率高的点，有合适目标就帮主攻幻境刷击杀。']
+  ],
+  5: [
+    ['守终战路线，争最后的击杀加成', '安排高战守终战所需的地块，优先打会影响终战名次的幻境，给第 6 天留饮料。'],
+    ['稳住优势点', '优先补可拿下的幻境，确认开城后的支援分工。'],
+    ['高效刷击杀，留终战饮料', '继续打能稳定连胜的目标，提前为第 6 天留足饮料。']
+  ],
+  6: [
+    ['守关键地块，集中打城', '高战负责守必要的进城地块，其余高战按积分差打城，保住夺冠所需名次。'],
+    ['按两个榜的分差补位', '城战有压力就支援城战，城战名次稳住后按实测击杀效率冲小队榜。'],
+    ['集中冲小队击杀榜', '按实际计入小队榜的击杀效率选点，末段把饮料用在能稳定赢的目标上。']
+  ]
+};
+const dialog = document.querySelector('dialog');
+const sheet = document.querySelector('#sheet-body');
+let day = 1;
+const isCastle = date => date === 3 || date === 6;
+const eventName = date => isCastle(date) ? '黄金城' : '沙海幻境';
+const rules = {
+  mirage: '<p>第 1、2、4、5 天开放。按<strong>本轮势力总击杀</strong>排名，第 1 名获得势力积分和 1 层黄金城击杀加成。</p>',
+  castle: '<p>第 3、6 天开放。按<strong>本轮势力总击杀</strong>排名，前 3 名获得大量势力积分。</p><p>小幻境获得的加成会增加黄金城争夺中的势力击杀数，可叠加，持续到本次联赛结束。</p>',
+  horn: '<p>会长、精锐、先锋每人每天可发起 1 次。次数在任命次日发放，仅当天有效。</p><p>无需达到普通总攻的累计消耗门槛，发起仍需消耗饮料。</p>'
+};
+function showSheet(title, content) {
+  document.querySelector('#sheet-title').textContent = title;
+  sheet.innerHTML = content;
+  if (!dialog.open) dialog.showModal();
+  dialog.scrollTop = 0;
+}
+function card(title, content) {
+  return '<div class="card"><h3>' + title + '</h3>' + content + '</div>';
+}
+document.querySelector('#map').addEventListener('click', () => {
+  showSheet('夺金地图', '<p>暂无地图</p>');
+});
+document.querySelector('#rules').addEventListener('click', () => {
+  showSheet('大夺金规则', card('沙海幻境', rules.mirage) +
+    card('黄金城', rules.castle) + card('沙漠号角', rules.horn));
+});
+document.querySelector('#factions').addEventListener('click', () => {
+  showSheet('各势力战力分析', '<p>暂无实战数据</p>' +
+    card('战力对比维度', '<ul><li>各组人数与开城出勤</li><li>小幻境胜场与黄金城击杀加成</li><li>进城路线与守地能力</li><li>黄金城实战击杀效率</li></ul>'));
+});
+document.querySelector('#schedule').addEventListener('click', () => {
+  const dates = Object.keys(days).map(Number).map(date =>
+    '<button class="day' + (isCastle(date) ? ' castle' : '') + '" data-day="' + date +
+    '"><span>第 ' + date + ' 天</span><b>' + eventName(date) + '</b></button>'
+  ).join('');
+  showSheet('日程', '<div class="schedule" role="group" aria-label="选择活动日">' + dates +
+    '</div><div id="schedule-result" aria-live="polite"></div>' +
+    '<button class="primary" id="schedule-tasks">查看当天小组任务</button>');
+  const buttons = [...sheet.querySelectorAll('[data-day]')];
+  function updateSchedule() {
+    buttons.forEach(button => button.setAttribute('aria-pressed', String(Number(button.dataset.day) === day)));
+    sheet.querySelector('#schedule-result').innerHTML = card(days[day], isCastle(day) ? rules.castle : rules.mirage);
+  }
+  buttons.forEach(button => button.addEventListener('click', () => {
+    day = Number(button.dataset.day);
+    updateSchedule();
+  }));
+  sheet.querySelector('#schedule-tasks').addEventListener('click', openTasks);
+  updateSchedule();
+});
+let group = 0;
+function updateTasks() {
+  const [title, ...items] = tasks[day][group];
+  document.querySelector('#sheet-title').textContent = '第 ' + day + ' 天 · 小组任务';
+  sheet.querySelectorAll('[data-task-day]').forEach(button => {
+    button.setAttribute('aria-pressed', String(Number(button.dataset.taskDay) === day));
+  });
+  sheet.querySelectorAll('[data-group]').forEach(button => {
+    button.setAttribute('aria-pressed', String(Number(button.dataset.group) === group));
+  });
+  sheet.querySelector('#daily-goal').textContent = goals[day];
+  sheet.querySelector('#task-result').innerHTML =
+    '<div class="card"><h3>' + title + '</h3><ol>' +
+    items.map(item => '<li>' + item + '</li>').join('') + '</ol></div>';
+}
+function openTasks() {
+  const dates = Object.keys(days).map(date =>
+    '<button class="task-option" data-task-day="' + date + '" aria-label="第 ' + date + ' 天">' + date + ' 日</button>'
+  ).join('');
+  const roles = groups.map(({name, level}, index) =>
+    '<button class="task-option" data-group="' + index + '">' + name + '<span>' + level + '</span></button>'
+  ).join('');
+  showSheet('小组任务', '<div class="task-controls"><div class="task-days" role="group" aria-label="活动日">' +
+    dates + '</div><div class="task-groups" role="group" aria-label="战力组">' +
+    roles + '</div></div><div class="card" aria-live="polite"><h3>当日目标</h3><p id="daily-goal"></p></div><div id="task-result" aria-live="polite"></div>');
+  sheet.querySelectorAll('[data-task-day]').forEach(button => button.addEventListener('click', () => {
+    day = Number(button.dataset.taskDay);
+    updateTasks();
+  }));
+  sheet.querySelectorAll('[data-group]').forEach(button => button.addEventListener('click', () => {
+    group = Number(button.dataset.group);
+    updateTasks();
+  }));
+  updateTasks();
+  dialog.querySelector('.quiet').focus();
+}
+document.querySelector('#strategy').addEventListener('click', openTasks);
+dialog.addEventListener('click', event => { if (event.target === dialog) dialog.close(); });
+</script>
+</body>
+</html>
